@@ -12,10 +12,22 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fw-bold">
         <a class="navbar-brand text-info fs-3 ps-3" href="index.php">Joe's Mongoose Parkour Race</a>
     </nav>
+    <?php
+        if (isset($_GET["err"])) {
+            echo("<div class=\"row\">");
+            echo("<div class=\"col-lg-4\"></div>");
+            echo("<div class=\"col-lg-4\">");
+            echo("<h1 class=\"h1 text-danger bg-secondary text-center mt-4\">Incorrect Username or Password</h1>");
+            echo("</div>");
+            echo("<div class=\"col-lg-4\"></div>");
+            echo("</div>");
+        }
+    ?>
     <div class="row">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
     <form action="login.php" method="post" class="mt-5 text-center bg-dark p-5">
+        <h1 class="h1 text-warning mb-5">Login existing user</h1>
         <div class="form-group mt-3">
         <input type="text" class="form-control" name="username" id="username" placeholder="Username">
         </div>
@@ -23,7 +35,7 @@
         <input type="password" class="form-control" name="password" id="password" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary mt-3 fs-4">Login</button>
-        <div class="form-group mt-4 fs-5"><a href="register.html">or Register an account</a></div>
+        <div class="form-group mt-4 fs-5"><a href="register_form.php">or Register an account</a></div>
     </form>
     </div>
     <div class="col-lg-4"></div>

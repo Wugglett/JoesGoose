@@ -5,14 +5,18 @@
     include("token.php");
 
     $username = $_POST["username"];
-    $reusername = $_POST["re-username"];
+    $reusername = $_POST["reusername"];
     $password = $_POST["password"];
-    $repassword = $_POST["re-password"];
+    $repassword = $_POST["repassword"];
 
     // Make sure they correctly reentered both username and password
-    if (strcmp($username,$reusername) != 0 || strcmp($password,$repassword) != 0) {
-        // Exit with incorrect email/password back to registration page
-        header("Location: register.html");
+    if ($username != $reusername) {
+        // Exit with incorrect username match back to registration page
+        header("Location: register_form.php?err=1");
+    }
+    if (strcmp($password,$repassword) != 0) {
+        // Exit with incorrect password match back to registration page
+        header("Location: register_form.php?err=2");
     }
 
     // Check that the username is not already in use
@@ -22,7 +26,7 @@
     $res = $stmt->get_result();
     if ($res->num_rows > 0) {
         // Exit with username already in use back to registration page
-        header("Location: register.html");
+        header("Location: register_form.php?err=3");
     }
     else {
         // Confirmation is done, now time to add to database

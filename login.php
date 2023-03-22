@@ -14,13 +14,13 @@
     $res = $stmt->get_result();
     if ($res->num_rows == 0) {
         // Exit with error for username incorrect back to login page
-        header("Location: login.html");
+        header("Location: login_form.php?err=1");
     }
 
     $row = $res->fetch_array();
     if (strcmp($row[0], $password) != 0) {
         // Exit with error for incorrect password back to login page
-        header("Location: login.html");
+        header("Location: login_form.php?err=1");
     }
     else {
         // Create token for Session and return to homepage
