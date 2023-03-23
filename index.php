@@ -72,13 +72,28 @@
                         $time -= $minute*60;
                         $second = (int)$time;
 
-                        $time_string = $hour.":".$minute.":".$second;
+                        $hour_string = $hour;
+                        if ($hour<10) $hour_string = "0".$hour;
+                        
+                        $minute_string = $minute;
+                        if ($minute<10) $minute_string = "0".$minute;
 
-                        printf("<th scope=\"row\" class=\"text-warning\">#%d</th>
+                        $second_string = $second;
+                        if ($second<10) $second_string = "0".$second;
+
+                        $time_string = $hour_string.":".$minute_string.":".$second_string;
+
+                        $color = "";
+                        if ($count == 1) $color = "text-warning";
+                        else if ($count == 2) $color = "text-info";
+                        else if ($count == 3) $color = "text-success";
+                        else $color = "text-white";
+
+                        printf("<tr><th scope=\"row\" class=\"%s\">#%d</th>
                         <td><a href=\"\">%s</a></td>
                         <td><a href=\"%s\">%s</a></td>
                         <td>%s</td>
-                        <td>%s</td>", $count, $row[0], $row[1], $time_string, $row[3], $row[4]);
+                        <td>%s</td></tr>", $color, $count, $row[0], $row[1], $time_string, $row[3], $row[4]);
                         $count++;
                         $row = $res->fetch_row();
                     }
