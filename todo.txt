@@ -1,0 +1,11 @@
+
+-- Add background images to the pages to make more aesthetically pleasing
+
+-- Do more error checking in register/submit/approve/etc to make sure inserts/updates are successful
+
+-- Add profile description and profile image to database table and profile page (in left column)
+
+-- Make sure user cannot insert SQL statements into queries for malpurpose
+
+-- Add multiple leaderboards to display the different run types
+
