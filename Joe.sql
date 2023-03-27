@@ -12,7 +12,7 @@ CREATE TABLE Runs (
     console ENUM('Xbox One', 'Xbox Series X/S', 'PC') NOT NULL,
     run_time INT NOT NULL,
     date_completed DATE NOT NULL,
-    approved ENUM('NO', 'YES') NOT NULL DEFAULT 'NO',
+    approved ENUM('NO', 'WAITING', 'YES') NOT NULL DEFAULT 'MAYBE',
     link VARCHAR(2083) NOT NULL,
     run_type ENUM('One Lap', 'Three Laps') NOT NULL,
     FOREIGN KEY(user_id) REFERENCES Users(id),

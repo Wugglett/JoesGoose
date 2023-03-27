@@ -22,19 +22,32 @@
                     <a class="nav-link text-warning login-link" href="">Leaderboards</a>
                 </li>
                 <?php
+                    include("header.php");
                     if (!isset($_SESSION["token"])) {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning login-link\" href=\"login_form.php\">Login</a>
-                    </li>");
+                        </li>");
                     }
                     
                     else {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning\" href=\"submit.html\">Submit</a>
-                    </li>");
+                        </li>");
+
+                        $stmt = $mysqli->prepare("SELECT mod_status FROM Users WHERE id = ?");
+                        $stmt->bind_param("i", $_SESSION["user_id"]);
+                        $stmt->execute();
+                        $res = $stmt->get_result();
+                        $row = $res->fetch_row();
+                        if ($row[0] == 'MOD') {
+                            echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                            <a class=\"nav-link text-warning login-link\" href=\"approve.php\">Approve Runs</a>
+                            </li>");
+                        }
+
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning login-link\" href=\"logout.php\">Logout</a>
-                    </li>");
+                        </li>");
                     }
                 ?>
             </ul>
