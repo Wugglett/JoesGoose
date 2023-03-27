@@ -19,7 +19,7 @@
     $rt_seconds = $time_values[0]*60*60 + $time_values[1]*60 + $time_values[2];
 
     $stmt = $mysqli->prepare("INSERT INTO Runs(user_id, console, run_time, date_completed, link, run_type) VALUES(?,?,?,?,?,?)");
-    $stmt->bind_param("isisss", $_SESSION["user_id"], $console, $rt_seconds, date("d/m/Y"), $link, $runtype);
+    $stmt->bind_param("isisss", $_SESSION["user_id"], $console, $rt_seconds, date("Y-m-d H:i:s"), $link, $runtype);
     $stmt->execute();
 
     header("Location: index.php");

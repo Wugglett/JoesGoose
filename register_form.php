@@ -17,21 +17,21 @@
         <div hidden id="ErrorOne" class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
-                <h1 class="h1 text-danger bg-secondary text-center mt-4">Usernames did not match</h1>
+                <h1 class="h1 text-danger text-center mt-4">Usernames did not match</h1>
             </div>
             <div class="col-lg-4"></div>
         </div>
         <div hidden id="ErrorTwo" class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
-                <h1 class="h1 text-danger bg-secondary text-center mt-4">Passwords did not match</h1>
+                <h1 class="h1 text-danger text-center mt-4">Passwords did not match</h1>
             </div>
             <div class="col-lg-4"></div>
         </div>
         <div hidden id="ErrorThree" class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
-                <h1 class="h1 text-danger bg-secondary text-center mt-4">Username already in use</h1>
+                <h1 class="h1 text-danger text-center mt-4">Username already in use</h1>
             </div>
             <div class="col-lg-4"></div>
         </div>

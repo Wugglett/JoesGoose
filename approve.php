@@ -65,14 +65,14 @@
 
                 $time_string = $hour_string.":".$minute_string.":".$second_string;
 
-                printf("<tr><th scope=\"row\">%s</th>
+                printf("<tr><th scope=\"row\"><a href=\"profile_page.php?u=%s\">%s</a></th>
                 <td>%s</td>
                 <td><a href=\"%s\">%s</a></td>
                 <td>%s</td>
                 <td>%s</td>
                 <td><button class=\"btn btn-light ms-3 me-3\" onclick=\"window.location.href='approve_run.php?r=%d&&y=0'\">Yes</button>
                     <button class=\"btn btn-light\" onclick=\"window.location.href='approve_run.php?r=%d&&y=1'\">No</button>
-                </td></tr>", $row[0], $time_string, $row[2], $row[2], $row[3], $row[4], $row[5], $row[5]);
+                </td></tr>", $row[0], $row[0], $time_string, $row[2], $row[2], $row[3], $row[4], $row[5], $row[5]);
                 $row = $res->fetch_row();
             }
 

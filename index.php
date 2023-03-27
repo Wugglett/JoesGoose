@@ -103,10 +103,10 @@
                         else $color = "text-white";
 
                         printf("<tr><th scope=\"row\" class=\"%s\">#%d</th>
-                        <td><a href=\"\">%s</a></td>
+                        <td><a href=\"profile_page.php?u=%s\">%s</a></td>
                         <td><a href=\"%s\">%s</a></td>
                         <td>%s</td>
-                        <td>%s</td></tr>", $color, $count, $row[0], $row[1], $time_string, $row[3], $row[4]);
+                        <td>%s</td></tr>", $color, $count, $row[0], $row[0], $row[1], $time_string, $row[3], $row[4]);
                         $count++;
                         $row = $res->fetch_row();
                     }

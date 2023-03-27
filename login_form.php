@@ -17,7 +17,7 @@
             echo("<div class=\"row\">");
             echo("<div class=\"col-lg-4\"></div>");
             echo("<div class=\"col-lg-4\">");
-            echo("<h1 class=\"h1 text-danger bg-secondary text-center mt-4\">Incorrect Username or Password</h1>");
+            echo("<h1 class=\"h1 text-danger text-center mt-4\">Incorrect Username or Password</h1>");
             echo("</div>");
             echo("<div class=\"col-lg-4\"></div>");
             echo("</div>");
