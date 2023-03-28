@@ -13,9 +13,30 @@
         <a class="navbar-brand text-info fs-3 ps-3" href="index.php">Joe's Mongoose Parkour Race</a>
     </nav>
     <div class="row">
+        <div hidden id="ErrorOne" class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <h1 class="h1 text-danger text-center mt-4">Link field cannot be empty</h1>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div hidden id="ErrorTwo" class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <h1 class="h1 text-danger text-center mt-4">Run Time field cannot be empty</h1>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+        <div hidden id="ErrorThree" class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <h1 class="h1 text-danger text-center mt-4">Run time format incorrect</h1>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
-    <form action="submit.php" method="post" class="mt-5 text-center bg-dark p-5">
+    <form OnSubmit="return CheckForm(this)" action="submit.php" method="post" class="mt-5 text-center bg-dark p-5">
         <h1 class="h1 text-warning mb-5">Run Submission</h1>
         <div class="form-group mt-3">
             <input type="url" class="form-control" name="runlink" id="runlink" placeholder="Link to run (youtube or other)">
@@ -42,5 +63,5 @@
     <div class="col-lg-4"></div>
     </div>
 </body>
-    <script src="index.js"></script>
+    <script src="submit.js"></script>
 </html>

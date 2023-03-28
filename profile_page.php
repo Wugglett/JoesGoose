@@ -21,7 +21,8 @@
                     include("header.php");
                     $stmt = $mysqli->prepare("SELECT Runs.link, Runs.run_time, Runs.date_completed, Runs.console, Runs.approved
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
-                                            WHERE Users.username = ?");
+                                            WHERE Users.username = ?
+                                            ORDER BY Runs.date_completed ASC");
                     $stmt->bind_param("s", $_GET["u"]);
                     $stmt->execute();
                     $res = $stmt->get_result();

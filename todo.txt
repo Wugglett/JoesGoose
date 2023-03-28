@@ -9,3 +9,5 @@
 
 -- Add multiple leaderboards to display the different run types
 
+-- Add error checking to submit form input with JS as to preserve input 
+
