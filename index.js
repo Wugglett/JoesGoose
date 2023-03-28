@@ -1,6 +1,7 @@
-// To create the main leaderboard table,
-// search SQL database for all approved entries then print them onto the html table as tr elements (+td elements)
-// make sure to group them by complete_time ascending
-// will need a table to hold Submissions(run_id, user_id, username, complete_time, date_submitted, platform, approved)
+alert("hrllo");
+console.log("hell2");
 
-// Should have a table of unapproved runs for mods to look at on the mod page
+function ll(form) {
+    if (form.value == "One Lap") window.location.replace("index.php?r=0");
+    else if (form.value == "Three Laps") window.location.replace("index.php?r=1");
+}

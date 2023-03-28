@@ -5,9 +5,16 @@
 
 -- Add profile description and profile image to database table and profile page (in left column)
 
+-- Add a no runs available check for the main page
+
+-- Allow runs to be submitted with video files as well
+
+-- Create run pages that will show video and have comments
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-- Add error checking to submit form input with JS as to preserve input
+
 -- Make sure user cannot insert SQL statements into queries for malpurpose
 
 -- Add multiple leaderboards to display the different run types
-
--- Add error checking to submit form input with JS as to preserve input 
-

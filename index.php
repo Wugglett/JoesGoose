@@ -9,18 +9,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Joe's Mongoose Parkour Race Speedruns</title>
+    <script src="test.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fw-bold">
-        <a class="navbar-brand text-info fs-3 ps-3" href="">Joe's Mongoose Parkour Race</a>
+        <a class="navbar-brand text-info fs-3 ps-3" href="index.php">Joe's Mongoose Parkour Race</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo0" aria-controls="navbarTogglerDemo0" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo0">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item me-5 ms-5 fs-4">
-                    <a class="nav-link text-warning login-link" href="">Leaderboards</a>
-                </li>
                 <?php
                     include("header.php");
                     if (!isset($_SESSION["token"])) {
@@ -55,7 +53,18 @@
     </nav>
     <div class="row">
         <div class="col-lg-2"></div>
-        <div class="col-lg-8 pt-5 ps-5 pe-5">
+        <div class="col-lg-8 pt-2 ps-5 pe-5">
+            <div class="row mb-3">
+                <div class="col-lg-5"></div>
+                <div class="col-lg-5"></div>
+                <div class="col-lg-2">
+                    <select OnChange="ll(this)" class="form-select mt-2 bg-dark text-warning border-dark" name="leaderboards" id="leaderboards">
+                        <option selected>Leaderboard</option>
+                        <option value="One Lap">One Lap</option>
+                        <option value="Three Lap">Three Lap</option>
+                    </select>
+                </div>
+            </div>
             <table class="table table-dark table-bordered table-striped fs-3">
                 <thead>
                     <tr class="text-warning">
@@ -68,10 +77,22 @@
                   </thead>
                   <?php
                     include("header.php");
+                    $runtype = "One Lap";
+                    if (isset($_GET["r"])){
+                        if ($_GET["r"] == 0) {
+                            $runtype = "One Lap";
+                            echo("<script type=\"text/javascript\">ChangeForm(0)</script>");
+                        }
+                        else if ($_GET["r"] == 1) {
+                            $runtype = "Three Lap";
+                            echo("<script type=\"text/javascript\">ChangeForm(1)</script>");
+                        }
+                    }
                     $stmt = $mysqli->prepare("SELECT Users.username, Runs.link, Runs.run_time, Runs.date_completed, Runs.console 
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
-                                            WHERE Runs.approved = 'Yes'
+                                            WHERE Runs.approved = 'Yes' && Runs.run_type = ?
                                             ORDER BY Runs.run_time ASC");
+                    $stmt->bind_param("s", $runtype);
                     $stmt->execute();
                     $res = $stmt->get_result();
                     $row = $res->fetch_row();
@@ -116,5 +137,4 @@
         <div class="col-lg-2"></div>
     </div>
 </body>
-    <script src="index.js"></script>
 </html>

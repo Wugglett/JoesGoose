@@ -14,7 +14,7 @@ CREATE TABLE Runs (
     date_completed DATE NOT NULL,
     approved ENUM('NO', 'WAITING', 'YES') NOT NULL DEFAULT 'MAYBE',
     link VARCHAR(2083) NOT NULL,
-    run_type ENUM('One Lap', 'Three Laps') NOT NULL,
+    run_type ENUM('One Lap', 'Three Lap') NOT NULL,
     FOREIGN KEY(user_id) REFERENCES Users(id),
     PRIMARY KEY(id)
 );
