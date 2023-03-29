@@ -5,16 +5,29 @@
 
 -- Add profile description and profile image to database table and profile page (in left column)
 
--- Add a no runs available check for the main page
-
 -- Allow runs to be submitted with video files as well
 
 -- Create run pages that will show video and have comments
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ |
+ v
+ 
+-- Create relational database to hold users and their runs
+
+-- Create basic layout of main page
+
+-- Create login and registration functionality along with pages
+
+-- Create run submission functionality along with pages
+
+-- Create run approval functionality for MOD users
+
 -- Add error checking to submit form input with JS as to preserve input
 
 -- Make sure user cannot insert SQL statements into queries for malpurpose
 
 -- Add multiple leaderboards to display the different run types
+
+-- Add a no runs available check for the main page

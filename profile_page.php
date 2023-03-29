@@ -19,6 +19,7 @@
         <h1 class="h1 text-warning text-center mt-5">Runs</h1>
                   <?php
                     include("header.php");
+                    include("helper_funcs.php");
                     $stmt = $mysqli->prepare("SELECT Runs.link, Runs.run_time, Runs.date_completed, Runs.console, Runs.approved
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
                                             WHERE Users.username = ?
@@ -46,28 +47,10 @@
                     }
 
                     while($row) {
-                        $time = $row[1];
-                        $hour = (int)($time/60/60);
-                        $time -= $hour*60*60;
-                        $minute = (int)($time/60);
-                        $time -= $minute*60;
-                        $second = (int)$time;
-
-                        $hour_string = $hour;
-                        if ($hour<10) $hour_string = "0".$hour;
-                        
-                        $minute_string = $minute;
-                        if ($minute<10) $minute_string = "0".$minute;
-
-                        $second_string = $second;
-                        if ($second<10) $second_string = "0".$second;
-
-                        $time_string = $hour_string.":".$minute_string.":".$second_string;
-
                         printf("<tr><th scope=\"row\"><a href=\"%s\">%s</a></th>
                         <td>%s</td>
                         <td>%s</td>
-                        <td>%s</td></tr>", $row[0], $time_string, $row[2], $row[3], $row[4]);
+                        <td>%s</td></tr>", $row[0], Time_To_String($row[1]), $row[2], $row[3], $row[4]);
                         $row = $res->fetch_row();
                     }
 

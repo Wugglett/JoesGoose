@@ -21,6 +21,7 @@
             <ul class="navbar-nav ms-auto">
                 <?php
                     include("header.php");
+                    include("helper_funcs.php");
                     if (!isset($_SESSION["token"])) {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning login-link\" href=\"login_form.php\">Login</a>
@@ -53,30 +54,19 @@
     </nav>
     <div class="row">
         <div class="col-lg-2"></div>
-        <div class="col-lg-8 pt-2 ps-5 pe-5">
-            <div class="row mb-3">
+        <div class="col-lg-8">
+            <div class="row mb-3 mt-3">
                 <div class="col-lg-5"></div>
                 <div class="col-lg-5"></div>
                 <div class="col-lg-2">
-                    <select OnChange="ll(this)" class="form-select mt-2 bg-dark text-warning border-dark" name="leaderboards" id="leaderboards">
+                    <select OnChange="ll(this)" class="form-select bg-dark text-warning border-dark" name="leaderboards" id="leaderboards">
                         <option selected>Leaderboard</option>
                         <option value="One Lap">One Lap</option>
                         <option value="Three Lap">Three Lap</option>
                     </select>
                 </div>
             </div>
-            <table class="table table-dark table-bordered table-striped fs-3">
-                <thead>
-                    <tr class="text-warning">
-                      <th scope="col">Place</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Time</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Platform</th>
-                    </tr>
-                  </thead>
                   <?php
-                    include("header.php");
                     $runtype = "One Lap";
                     if (isset($_GET["r"])){
                         if ($_GET["r"] == 0) {
@@ -88,7 +78,7 @@
                             echo("<script type=\"text/javascript\">ChangeForm(1)</script>");
                         }
                     }
-                    $stmt = $mysqli->prepare("SELECT Users.username, Runs.link, Runs.run_time, Runs.date_completed, Runs.console 
+                    $stmt = $mysqli->prepare("SELECT Users.username, Runs.id, Runs.run_time, Runs.date_completed, Runs.console 
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
                                             WHERE Runs.approved = 'Yes' && Runs.run_type = ?
                                             ORDER BY Runs.run_time ASC");
@@ -97,42 +87,41 @@
                     $res = $stmt->get_result();
                     $row = $res->fetch_row();
 
-                    $count = 1;
-                    while($row) {
-                        $time = $row[2];
-                        $hour = (int)($time/60/60);
-                        $time -= $hour*60*60;
-                        $minute = (int)($time/60);
-                        $time -= $minute*60;
-                        $second = (int)$time;
+                    if ($row) {
+                        echo("<table class=\"table table-dark table-bordered table-striped fs-3\">
+                        <thead>
+                            <tr class=\"text-warning\">
+                              <th scope=\"col\">Place</th>
+                              <th scope=\"col\">Name</th>
+                              <th scope=\"col\">Time</th>
+                              <th scope=\"col\">Date</th>
+                              <th scope=\"col\">Platform</th>
+                            </tr>
+                          </thead>");
 
-                        $hour_string = $hour;
-                        if ($hour<10) $hour_string = "0".$hour;
-                        
-                        $minute_string = $minute;
-                        if ($minute<10) $minute_string = "0".$minute;
+                        $count = 1;
+                        while($row) {
+                            $color = "";
+                            if ($count == 1) $color = "text-warning";
+                            else if ($count == 2) $color = "text-info";
+                            else if ($count == 3) $color = "text-success";
+                            else $color = "text-white";
+    
+                            printf("<tr><th scope=\"row\" class=\"%s\">#%d</th>
+                            <td><a href=\"profile_page.php?u=%s\">%s</a></td>
+                            <td><a href=\"run_page.php?r=%d\">%s</a></td>
+                            <td>%s</td>
+                            <td>%s</td></tr>", $color, $count, $row[0], $row[0], $row[1], Time_To_String($row[2]), $row[3], $row[4]);
+                            $count++;
+                            $row = $res->fetch_row();
+                        }
 
-                        $second_string = $second;
-                        if ($second<10) $second_string = "0".$second;
-
-                        $time_string = $hour_string.":".$minute_string.":".$second_string;
-
-                        $color = "";
-                        if ($count == 1) $color = "text-warning";
-                        else if ($count == 2) $color = "text-info";
-                        else if ($count == 3) $color = "text-success";
-                        else $color = "text-white";
-
-                        printf("<tr><th scope=\"row\" class=\"%s\">#%d</th>
-                        <td><a href=\"profile_page.php?u=%s\">%s</a></td>
-                        <td><a href=\"%s\">%s</a></td>
-                        <td>%s</td>
-                        <td>%s</td></tr>", $color, $count, $row[0], $row[0], $row[1], $time_string, $row[3], $row[4]);
-                        $count++;
-                        $row = $res->fetch_row();
+                        echo("</table>");
+                    }
+                    else {
+                        echo("<h1 class=\"h1 text-warning bg-dark text-center mt-4 p-5\">No runs found</h1>");
                     }
                   ?>
-            </table>
         </div>
         <div class="col-lg-2"></div>
     </div>

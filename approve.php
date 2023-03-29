@@ -18,6 +18,7 @@
         <?php
             session_start();
             include("header.php");
+            include("helper_funcs.php");
 
             $stmt = $mysqli->prepare("SELECT Users.username, Runs.run_time, Runs.link, Runs.date_completed, Runs.console, Runs.id 
                                     FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id
@@ -47,24 +48,6 @@
             }
 
             while($row) {
-                $time = $row[1];
-                $hour = (int)($time/60/60);
-                $time -= $hour*60*60;
-                $minute = (int)($time/60);
-                $time -= $minute*60;
-                $second = (int)$time;
-
-                $hour_string = $hour;
-                if ($hour<10) $hour_string = "0".$hour;
-                
-                $minute_string = $minute;
-                if ($minute<10) $minute_string = "0".$minute;
-
-                $second_string = $second;
-                if ($second<10) $second_string = "0".$second;
-
-                $time_string = $hour_string.":".$minute_string.":".$second_string;
-
                 printf("<tr><th scope=\"row\"><a href=\"profile_page.php?u=%s\">%s</a></th>
                 <td>%s</td>
                 <td><a href=\"%s\">%s</a></td>
@@ -72,7 +55,7 @@
                 <td>%s</td>
                 <td><button class=\"btn btn-light ms-3 me-3\" onclick=\"window.location.href='approve_run.php?r=%d&&y=0'\">Yes</button>
                     <button class=\"btn btn-light\" onclick=\"window.location.href='approve_run.php?r=%d&&y=1'\">No</button>
-                </td></tr>", $row[0], $row[0], $time_string, $row[2], $row[2], $row[3], $row[4], $row[5], $row[5]);
+                </td></tr>", $row[0], $row[0], Time_To_String($row[1]), $row[2], $row[2], $row[3], $row[4], $row[5], $row[5]);
                 $row = $res->fetch_row();
             }
 

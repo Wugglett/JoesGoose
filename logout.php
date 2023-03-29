@@ -1,6 +1,5 @@
 <?php
     session_start();
-    include("header.php");
     include("token.php");
 
     Remove_Token($_SESSION["token"]);
