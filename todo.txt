@@ -5,9 +5,9 @@
 
 -- Add profile description and profile image to database table and profile page (in left column)
 
--- Allow runs to be submitted with video files as well
-
 -- Need to add constraint to Comments table to check for only one FOREIGN KEY id
+
+-- Make comments deletable and add comments to comments functionality
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

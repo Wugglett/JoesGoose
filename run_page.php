@@ -30,7 +30,7 @@
 
                 if ($row) {
                     $youtube_link = substr(strchr($row[0], "="), 1);
-                    printf("<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/%s\"></iframe>", $youtube_link);
+                    printf("<iframe width=\"600\" height=\"400\" src=\"https://www.youtube.com/embed/%s\"></iframe>", $youtube_link);
                     printf("<h1 class=\"h1 text-warning mt-2\">%s:     %s</h1>", $row[1], Time_To_String($row[2]));
                 }
                 else {
@@ -59,19 +59,19 @@
                 $row = $res->fetch_row();
 
                 if ($row) {
-                    echo("<h2 class=\"h2 text-dark mb-4\">Comments:</h1>");
+                    echo("<h2 class=\"h2 text-warning mb-4\">Comments:</h1>");
                     while($row) {
-                        echo("<div class=\"row\"><div class=\"col-lg-1 text-secondary\">");
+                        echo("<div class=\"row mb-3\"><div class=\"col-lg-1 text-secondary\">");
                         echo($row[1]);
                         echo(":</div>");
-                        echo("<div class=\"col-lg-11 text-secondary\">");
+                        echo("<div class=\"col-lg-11 text-light\">");
                         echo($row[0]);
                         echo("</div></div>");
                         $row = $res->fetch_row();
                     }
                 }
                 else {
-                    echo("<h2 class=\"h2 text-dark\">No Comments</h1>");
+                    echo("<h2 class=\"h2 text-light\">No Comments</h1>");
                 }
 
                 echo("</div>");
