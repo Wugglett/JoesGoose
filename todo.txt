@@ -7,8 +7,6 @@
 
 -- Allow runs to be submitted with video files as well
 
--- Create run pages that will show video and have comments
-
 -- Need to add constraint to Comments table to check for only one FOREIGN KEY id
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,3 +33,5 @@
 -- Add a no runs available check for the main page
 
 -- Updated database to have a comments table
+
+-- Create run pages that will show video and have comments
