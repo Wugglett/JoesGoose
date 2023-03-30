@@ -9,6 +9,8 @@
 
 -- Make comments deletable and add comments to comments functionality
 
+-- Use password_hash($password, PASSWORD_DEFAULT) and password_verify to store passwords in databse
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  |
