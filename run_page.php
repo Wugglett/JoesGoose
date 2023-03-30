@@ -61,10 +61,10 @@
                 if ($row) {
                     echo("<h2 class=\"h2 text-dark mb-4\">Comments:</h1>");
                     while($row) {
-                        echo("<div class=\"row\"><div class\"col-lg-4 text-secondary\">");
+                        echo("<div class=\"row\"><div class=\"col-lg-1 text-secondary\">");
                         echo($row[1]);
                         echo(":</div>");
-                        echo("<div class=\"col-lg-8 text-secondary\">");
+                        echo("<div class=\"col-lg-11 text-secondary\">");
                         echo($row[0]);
                         echo("</div></div>");
                         $row = $res->fetch_row();
