@@ -1,5 +1,3 @@
-<?php session_start() ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +18,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo0">
             <ul class="navbar-nav ms-auto">
                 <?php
+                    session_start();
                     include("header.php");
                     include("helper_funcs.php");
                     if (!isset($_SESSION["token"])) {

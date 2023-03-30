@@ -1,13 +1,17 @@
 
 -- Add background images to the pages to make more aesthetically pleasing
 
--- Do more error checking in register/submit/approve/etc to make sure inserts/updates are successful
+-- Do more error checking in register/submit/approve/description/etc to make sure inserts/updates are successful
 
 -- Add profile description and profile image to database table and profile page (in left column)
 
 -- Need to add constraint to Comments table to check for only one FOREIGN KEY id
 
 -- Make comments deletable and add comments to comments functionality
+
+-- Add checks to many pages to verify user is logged in to utilize them
+
+-- Add timer on login token and log user out when entering login-in-required-pages if time has been alloted
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -18,15 +22,15 @@
 
 -- Create basic layout of main page
 
--- Create login and registration functionality along with pages
+-- Create login and registration functionality
 
--- Create run submission functionality along with pages
+-- Create run submission functionality
 
 -- Create run approval functionality for MOD users
 
--- Add error checking to submit form input with JS as to preserve input
+-- Add error checking to submit form with JS as to preserve input
 
--- Make sure user cannot insert SQL statements into queries for malpurpose
+-- Make sure user cannot use SQL injections
 
 -- Add multiple leaderboards to display the different run types
 
@@ -35,3 +39,5 @@
 -- Updated database to have a comments table
 
 -- Create run pages that will show video and have comments
+
+-- Update user table to hold descriptions and profile picture
