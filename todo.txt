@@ -9,9 +9,7 @@
 
 -- Make comments deletable and add comments to comments functionality
 
--- Add checks to many pages to verify user is logged in to utilize them
-
--- Add timer on login token and log user out when entering login-in-required-pages if time has been alloted
+-- Use password_hash($password, PASSWORD_DEFAULT) and password_verify to store passwords in databse
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -39,5 +37,3 @@
 -- Updated database to have a comments table
 
 -- Create run pages that will show video and have comments
-
--- Update user table to hold descriptions and profile picture
