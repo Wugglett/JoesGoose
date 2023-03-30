@@ -18,7 +18,7 @@
     }
 
     $row = $res->fetch_array();
-    if (strcmp($row[0], $password) != 0) {
+    if (!password_verify($password, $row[0])) {
         // Exit with error for incorrect password back to login page
         header("Location: login_form.php?err=1");
     }

@@ -30,9 +30,9 @@
     }
     else {
         // Confirmation is done, now time to add to database
-
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $mysqli->prepare("INSERT INTO Users(username, password) VALUES(?,?)");
-        $stmt->bind_param("ss", $username, $password);
+        $stmt->bind_param("ss", $username, $hashed_password);
         $stmt->execute();
 
         // Now create token for Session and return to homepage, logging user in
