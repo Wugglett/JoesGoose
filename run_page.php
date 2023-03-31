@@ -52,7 +52,7 @@
                         </div>
                     </form>");
                 
-                $stmt = $mysqli->prepare("SELECT Comments.content, Users.username FROM Comments LEFT JOIN Users ON Users.id = Comments.user_id WHERE Comments.run_id = ?");
+                $stmt = $mysqli->prepare("SELECT Comments.content, Users.username, Users.id, Comments.id FROM Comments LEFT JOIN Users ON Users.id = Comments.user_id WHERE Comments.run_id = ?");
                 $stmt->bind_param("i", $_GET["r"]);
                 $stmt->execute();
                 $res = $stmt->get_result();
@@ -66,6 +66,13 @@
                         echo(":</div>");
                         echo("<div class=\"col-lg-11 text-light\">");
                         echo($row[0]);
+                        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[2]) {
+                            echo("<form action=\"delete_comment.php\" method=\"post\">");
+                            printf("<input type=\"hidden\" id=\"comment_id\" name=\"comment_id\" value=\"%d\">", $row[3]);
+                            printf("<input type=\"hidden\" id=\"run_id\" name=\"run_id\" value=\"%d\">", $_GET["r"]);
+                            echo("<button type=\"submit\" class=\"btn btn-dark btn-sm text-warning\">Delete</button>
+                                </form>");
+                        }
                         echo("</div></div>");
                         $row = $res->fetch_row();
                     }

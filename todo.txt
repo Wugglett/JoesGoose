@@ -9,8 +9,6 @@
 
 -- Make comments deletable and add comments to comments functionality
 
--- Use password_hash($password, PASSWORD_DEFAULT) and password_verify to store passwords in databse
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  |
@@ -37,3 +35,5 @@
 -- Updated database to have a comments table
 
 -- Create run pages that will show video and have comments
+
+-- Use password_hash($password, PASSWORD_DEFAULT) and password_verify to store passwords in databse
