@@ -5,9 +5,11 @@
 
 -- Add comments to comments functionality
 
--- Add run deletion functionality for users
-
 -- Display submit and login/logout on all pages depending on login status
+
+-- Create admin page to give users MOD status as well as manage runs and users
+
+-- Add timer to tokens to be deleted after X amount of time
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  |                                                                                                      |
@@ -43,3 +45,5 @@
 -- Make comments deletable
 
 -- Add profile description and profile image to database table and profile page (in left column)
+
+-- Add run deletion functionality for users

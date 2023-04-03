@@ -85,7 +85,7 @@
     <div class="col-lg-7">
         <h1 class="h1 text-warning text-center mt-5">Runs</h1>
                   <?php
-                    $stmt = $mysqli->prepare("SELECT Runs.run_time, Runs.date_completed, Runs.console, Runs.approved, Runs.id
+                    $stmt = $mysqli->prepare("SELECT Runs.run_time, Runs.date_completed, Runs.console, Runs.approved, Runs.id, Users.id
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
                                             WHERE Users.username = ?
                                             ORDER BY Runs.date_completed ASC");
@@ -102,9 +102,9 @@
                               <th scope=\"col\">Time</th>
                               <th scope=\"col\">Date</th>
                               <th scope=\"col\">Platform</th>
-                              <th scope=\"col\">Approved</th>
-                            </tr>
-                          </thead>");
+                              <th scope=\"col\">Approved</th>");
+                              if ($row[5] == $_SESSION['user_id']) echo("<th scope=\"col\">Delete Run</th>");
+                          echo("</tr></thead>");
                           $table = true;
                     }
                     else {
@@ -112,10 +112,13 @@
                     }
 
                     while($row) {
-                        printf("<tr><th scope=\"row\"><a href=\"run_page.php?r=%d\">%s</a></th>
+                        printf("<tr>
+                        <th scope=\"row\"><a href=\"run_page.php?r=%d\">%s</a></th>
                         <td>%s</td>
                         <td>%s</td>
-                        <td>%s</td></tr>", $row[4], Time_To_String($row[0]), $row[1], $row[2], $row[3]);
+                        <td>%s</td>", $row[4], Time_To_String($row[0]), $row[1], $row[2], $row[3]);
+                        if ($row[5] == $_SESSION['user_id']) printf("<td class=\"text-center\"><button class=\"btn btn-muted text-warning\" onclick=\"window.location.href='delete_runs.php?r=%d&&u=%s'\">Delete</button></td>", $row[4], $_GET['u']);
+                        echo("</tr>");
                         $row = $res->fetch_row();
                     }
 
