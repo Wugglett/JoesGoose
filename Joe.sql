@@ -3,6 +3,7 @@ CREATE TABLE Users (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     mod_status ENUM('NON-MOD','MOD') NOT NULL DEFAULT 'NON-MOD',
+    profile_pic LONGBLOB,
     PRIMARY KEY(id)
 );
 
@@ -28,7 +29,6 @@ CREATE TABLE Comments (
     FOREIGN KEY(user_id) REFERENCES Users(id),
     FOREIGN KEY(run_id) REFERENCES Runs(id),
     PRIMARY KEY(id),
-    CONSTRAINT require_parent_id CHECK((run_id IS NULL OR comment_id IS NULL) AND NOT (run_id IS NULL AND comment_id IS NULL)) -- Did not work need to implement later
 );
 
 CREATE TABLE Tokens (

@@ -5,5 +5,5 @@
     $stmt->bind_param("i", $_POST["comment_id"]);
     $stmt->execute();
 
-    header("Location: run_page.php?r=".$_GET["run_id"]);
+    header("Location: run_page.php?r=".$_POST["run_id"]);
 ?>

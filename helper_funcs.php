@@ -7,15 +7,17 @@
             $second = (int)$time;
     
             $hour_string = $hour;
-            if ($hour<10) $hour_string = "0".$hour;
+            if ($hour == 0) $hour_string = "";
+            else $hour_string = $hour.":";
             
             $minute_string = $minute;
-            if ($minute<10) $minute_string = "0".$minute;
+            if ($minute<10) $minute_string = "0".$minute.":";
+            else $minute_string = $minute_string.":";
     
             $second_string = $second;
             if ($second<10) $second_string = "0".$second;
     
-            $time_string = $hour_string.":".$minute_string.":".$second_string;
+            $time_string = $hour_string.$minute_string.$second_string;
     
             return $time_string;
         }

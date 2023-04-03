@@ -14,12 +14,44 @@
     </nav>
     <div class="row">
     <div class="col-lg-1"></div>
-    <div class="col-lg-3 me-5"> <h1 class="h1 text-warning ms-5 mt-5 mb-5"><?php echo($_GET["u"]) ?></h1>
+    <div class="col-lg-3 me-5 text-center">
+        <div class="row mt-3 mb-4">
+            <div class="col-lg-6 mt-5">
     <?php
         session_start();
         include("header.php");
         include("helper_funcs.php");
 
+        $stmt = $mysqli->prepare("SELECT profile_pic, id FROM Users WHERE username = ?");
+        $stmt->bind_param("s", $_GET["u"]);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_row();
+
+        $picture_set = "Upload";
+        if ($row[0] != NULL) {
+            printf("<img height=\"150\" width=\"150\" src=\"%s\"/>", $row[0]);
+            $picture_set = "Change";
+        }
+        else {
+            echo("<h3 class\"h3 text-warning\">User has no profile picture</h3>");
+        }
+
+        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[1]) {
+            printf("<div class=\"text-light\"><form action=\"profile_picture.php\" method=\"post\" enctype=\"multipart/form-data\">
+            <label>%s Profile Picture:</label>
+            <input type=\"file\" name=\"image\" id=\"image\">
+            <input type=\"hidden\" name=\"username\" id=\"username\" value=\"%s\">
+            <input type=\"submit\" name=\"submit\" value=\"Upload\">
+            </form></div>",$picture_set, $_GET["u"]);
+        }
+    ?>
+            </div>
+            <div class="col-lg-6">
+                <h1 class="h1 text-warning ms-5 mt-5 mb-5"><?php echo($_GET["u"]) ?></h1>
+            </div>
+        </div>
+    <?php
         $stmt = $mysqli->prepare("SELECT description, id FROM Users WHERE username = ?");
         $stmt->bind_param("s", $_GET["u"]);
         $stmt->execute();
@@ -29,7 +61,7 @@
         echo("<h3 class=\"h3 text-secondary ms-5\">User Description:</h3>");
 
         if ($row[0]) {
-            if ($_SESSION["user_id"] == $row[1]) {
+            if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[1]) {
                 echo("<form action=\"description.php\" method=\"post\"><div class=\"form-group ms-3\">");
                 printf("<textarea class=\"form-control\" id=\"content\" name=\"content\" rows=\"4\" placeholder=\"Write your description here\">%s</textarea>", $row[0]);
                 printf("<input type=\"hidden\" id=\"user\" name=\"user\" value=\"%s\">", $_GET["u"]);
@@ -39,7 +71,7 @@
             else printf("<h4 class=\"h4 text-secondary ms-5\">%s</h4>", $row[0]);
         }
         else {
-            if ($_SESSION["user_id"] == $row[1]) {
+            if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[1]) {
                 echo("<form action=\"description.php\" method=\"post\"><div class=\"form-group ms-3\">");
                 echo("<textarea class=\"form-control\" id=\"content\" name=\"content\" rows=\"4\" placeholder=\"Write your description here\"></textarea>");
                 printf("<input type=\"hidden\" id=\"user\" name=\"user\" value=\"%s\">", $_GET["u"]);
