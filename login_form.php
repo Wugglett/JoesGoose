@@ -14,13 +14,33 @@
     </nav>
     <?php
         if (isset($_GET["err"])) {
-            echo("<div class=\"row\">");
-            echo("<div class=\"col-lg-4\"></div>");
-            echo("<div class=\"col-lg-4\">");
-            echo("<h1 class=\"h1 text-danger text-center mt-4\">Incorrect Username or Password</h1>");
-            echo("</div>");
-            echo("<div class=\"col-lg-4\"></div>");
-            echo("</div>");
+            if ($_GET['err'] == 1) {
+                echo("<div class=\"row\">");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("<div class=\"col-lg-4\">");
+                echo("<h1 class=\"h1 text-danger text-center mt-4\">Incorrect Username or Password</h1>");
+                echo("</div>");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("</div>");
+            }
+            else if ($_GET['err'] == 2) {
+                echo("<div class=\"row\">");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("<div class=\"col-lg-4\">");
+                echo("<h1 class=\"h1 text-danger text-center mt-4\">Need to be logged in to submit runs</h1>");
+                echo("</div>");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("</div>");
+            }
+            else if ($_GET['err'] == 3) {
+                echo("<div class=\"row\">");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("<div class=\"col-lg-4\">");
+                echo("<h1 class=\"h1 text-danger text-center mt-4\">Need to be logged in to approve runs</h1>");
+                echo("</div>");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("</div>");
+            }
         }
     ?>
     <div class="row">

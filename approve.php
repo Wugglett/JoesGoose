@@ -11,15 +11,34 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fw-bold">
         <a class="navbar-brand text-info fs-3 ps-3" href="index.php">Joe's Mongoose Parkour Race</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo0" aria-controls="navbarTogglerDemo0" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo0">
+            <ul class="navbar-nav ms-auto">
+            <?php
+                session_start();
+                include("header.php");
+                include("helper_funcs.php");
+
+                if (!isset($_SESSION["token"])) {
+                    header("Location: login_form.php?err=3");
+                }
+                else {
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning\" href=\"submit_form.php\">Submit</a>
+                    </li>");
+
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning login-link\" href=\"logout.php\">Logout</a>
+                    </li>");
+                }     
+            ?>
     </nav>
     <div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-10">
         <?php
-            session_start();
-            include("header.php");
-            include("helper_funcs.php");
-
             $stmt = $mysqli->prepare("SELECT Users.username, Runs.run_time, Runs.link, Runs.date_completed, Runs.console, Runs.id 
                                     FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id
                                     WHERE Runs.approved = 'Maybe' AND Runs.user_id != ?");

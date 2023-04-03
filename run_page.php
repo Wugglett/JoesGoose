@@ -12,16 +12,48 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fw-bold">
         <a class="navbar-brand text-info fs-3 ps-3" href="index.php">Joe's Mongoose Parkour Race</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo0" aria-controls="navbarTogglerDemo0" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo0">
+            <ul class="navbar-nav ms-auto">
+            <?php
+                session_start();
+                include("header.php");
+                include("helper_funcs.php");
+
+                if (!isset($_SESSION["token"])) {
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning login-link\" href=\"login_form.php\">Login</a>
+                    </li>");                    
+                }
+                else {
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning\" href=\"submit_form.php\">Submit</a>
+                    </li>");
+
+                    $stmt = $mysqli->prepare("SELECT mod_status FROM Users WHERE id = ?");
+                    $stmt->bind_param("i", $_SESSION["user_id"]);
+                    $stmt->execute();
+                    $res = $stmt->get_result();
+                    $row = $res->fetch_row();
+                    if ($row[0] == 'MOD') {
+                        echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                        <a class=\"nav-link text-warning login-link\" href=\"approve.php\">Approve Runs</a>
+                        </li>");
+                    }                    
+
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning login-link\" href=\"logout.php\">Logout</a>
+                    </li>");
+                }     
+            ?>
     </nav>
 
     <div class="row mt-4">
         <div class="col-lg-2"></div>
         <div class="col-lg-6 text-center">
             <?php
-                session_start();
-                include("header.php");
-                include("helper_funcs.php");
-
                 $stmt = $mysqli->prepare("SELECT Runs.link, Users.username, Runs.run_time FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id WHERE Runs.id = ?");
                 $stmt->bind_param("i", $_GET["r"]);
                 $stmt->execute();

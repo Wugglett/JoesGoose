@@ -29,7 +29,7 @@
                     
                     else {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
-                        <a class=\"nav-link text-warning\" href=\"submit.html\">Submit</a>
+                        <a class=\"nav-link text-warning\" href=\"submit_form.php\">Submit</a>
                         </li>");
 
                         $stmt = $mysqli->prepare("SELECT mod_status FROM Users WHERE id = ?");

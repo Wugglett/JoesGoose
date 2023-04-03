@@ -11,6 +11,42 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fw-bold">
         <a class="navbar-brand text-info fs-3 ps-3" href="index.php">Joe's Mongoose Parkour Race</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo0" aria-controls="navbarTogglerDemo0" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo0">
+            <ul class="navbar-nav ms-auto">
+            <?php
+                session_start();
+                include("header.php");
+                include("helper_funcs.php");
+
+                if (!isset($_SESSION["token"])) {
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning login-link\" href=\"login_form.php\">Login</a>
+                    </li>");                    
+                }
+                else {
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning\" href=\"submit_form.php\">Submit</a>
+                    </li>");
+
+                    $stmt = $mysqli->prepare("SELECT mod_status FROM Users WHERE id = ?");
+                    $stmt->bind_param("i", $_SESSION["user_id"]);
+                    $stmt->execute();
+                    $res = $stmt->get_result();
+                    $row = $res->fetch_row();
+                    if ($row[0] == 'MOD') {
+                        echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                        <a class=\"nav-link text-warning login-link\" href=\"approve.php\">Approve Runs</a>
+                        </li>");
+                    }
+                    
+                    echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                    <a class=\"nav-link text-warning login-link\" href=\"logout.php\">Logout</a>
+                    </li>");
+                }     
+            ?>
     </nav>
     <div class="row">
     <div class="col-lg-1"></div>
@@ -18,10 +54,6 @@
         <div class="row mt-3 mb-4">
             <div class="col-lg-6 mt-5">
     <?php
-        session_start();
-        include("header.php");
-        include("helper_funcs.php");
-
         $stmt = $mysqli->prepare("SELECT profile_pic, id FROM Users WHERE username = ?");
         $stmt->bind_param("s", $_GET["u"]);
         $stmt->execute();
