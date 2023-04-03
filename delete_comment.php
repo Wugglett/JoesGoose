@@ -3,7 +3,9 @@
 
     $stmt = $mysqli->prepare("DELETE FROM Comments WHERE id = ?");
     $stmt->bind_param("i", $_POST["comment_id"]);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        header("Location: run_page.php?r=".$run."&&err=2");
+    }
 
     header("Location: run_page.php?r=".$_POST["run_id"]);
 ?>

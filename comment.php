@@ -8,7 +8,9 @@
 
     $stmt = $mysqli->prepare("INSERT INTO Comments(user_id, run_id, content) VALUES(?,?,?)");
     $stmt->bind_param("iis", $_SESSION["user_id"], $run, $_POST["content"]);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        header("Location: run_page.php?r=".$run."&&err=1");
+    }
 
     header("Location: run_page.php?r=".$run);
 ?>

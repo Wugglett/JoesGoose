@@ -39,6 +39,10 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-10">
         <?php
+            if (isset($_GET['err']) && $_GET['err'] == 1) {
+                echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to update run</h1>");
+            }
+
             $stmt = $mysqli->prepare("SELECT Users.username, Runs.run_time, Runs.link, Runs.date_completed, Runs.console, Runs.id 
                                     FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id
                                     WHERE Runs.approved = 'Maybe' AND Runs.user_id != ?");

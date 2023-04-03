@@ -73,6 +73,15 @@
                 echo("<div class=\"col-lg-4\">");
                 
                 echo("<h5 hidden class=\"h5 text-danger\" id=\"ErrorOne\">Cannot post blank comment</h5>");
+                
+                if (isset($_GET['err']) && $_GET['err'] == 1) {
+                    echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to post comment</h1>");
+                }
+
+                if (isset($_GET['err']) && $_GET['err'] == 2) {
+                    echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to delete comment</h1>");
+                }
+
                 if (isset($_GET["u"])) echo("<h5 class=\"h5 text-danger\" id=\"ErrorTwo\">Must be logged in to post comment</h5>");
 
                 echo("<form OnSubmit=\"return CheckForm(this)\" action=\"comment.php\" method=\"post\" class=\"mb-5\">

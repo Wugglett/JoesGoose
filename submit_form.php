@@ -53,6 +53,11 @@
             </div>
             <div class="col-lg-4"></div>
         </div>
+        <?php
+            if (isset($_GET['err']) && $_GET['err'] == 1) {
+                echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to submit</h1>");
+            }
+        ?>
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
     <form OnSubmit="return CheckForm(this)" action="submit.php" method="post" class="mt-5 text-center bg-dark p-5">

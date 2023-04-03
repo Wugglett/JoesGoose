@@ -5,7 +5,7 @@
 
     if ($_SESSION["token"] == null) {
         // Need to be logged in to submit a run
-        header("Location: submit.html");
+        header("Location: submit_form.php");
     }
 
     $link = $_POST["runlink"];
@@ -20,7 +20,9 @@
 
     $stmt = $mysqli->prepare("INSERT INTO Runs(user_id, console, run_time, date_completed, link, run_type) VALUES(?,?,?,?,?,?)");
     $stmt->bind_param("isisss", $_SESSION["user_id"], $console, $rt_seconds, date("Y-m-d H:i:s"), $link, $runtype);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        header("Location: submit_form.php?err=1");
+    }
 
     header("Location: index.php");
 ?>

@@ -54,6 +54,19 @@
         <div class="row mt-3 mb-4">
             <div class="col-lg-6 mt-5">
     <?php
+
+       if (isset($_GET['err']) && $_GET['err'] == 1) {
+            echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to upload picture</h1>");
+        }
+
+        if (isset($_GET['err']) && $_GET['err'] == 2) {
+            echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to update description</h1>");
+        }
+
+        if (isset($_GET['err']) && $_GET['err'] == 3) {
+            echo("<h1 class=\"h1 text-danger text-center mt-4\">Did not receive picture file</h1>");
+        }        
+
         $stmt = $mysqli->prepare("SELECT profile_pic, id FROM Users WHERE username = ?");
         $stmt->bind_param("s", $_GET["u"]);
         $stmt->execute();
@@ -117,6 +130,11 @@
     <div class="col-lg-7">
         <h1 class="h1 text-warning text-center mt-5">Runs</h1>
                   <?php
+
+                    if (isset($_GET['err']) && $_GET['err'] == 3) {
+                        echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to delete run</h1>");
+                    }
+
                     $stmt = $mysqli->prepare("SELECT Runs.run_time, Runs.date_completed, Runs.console, Runs.approved, Runs.id, Users.id
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
                                             WHERE Users.username = ?

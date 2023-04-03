@@ -1,8 +1,6 @@
 
 -- Add background images to the pages to make more aesthetically pleasing
 
--- Do more error checking in register/submit/approve/description/profile_pic to make sure inserts/updates are successful
-
 -- Add comments to comments functionality
 
 -- Create admin page to give users MOD status as well as manage runs and users
@@ -49,3 +47,5 @@
 -- Add login checks to submit/approve pages to redirect to login page
 
 -- Display submit and login/logout on all pages depending on login status
+
+-- Do more error checking in register/submit/approve/description/profile_pic/comment to make sure inserts/updates are successful

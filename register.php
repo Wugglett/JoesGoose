@@ -22,7 +22,10 @@
     // Check that the username is not already in use
     $stmt = $mysqli->prepare("SELECT * FROM Users WHERE username = ?");
     $stmt->bind_param("s", $username);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        header("Location: register_form.php?err=4");
+    }
+
     $res = $stmt->get_result();
     if ($res->num_rows > 0) {
         // Exit with username already in use back to registration page
