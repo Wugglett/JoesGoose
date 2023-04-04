@@ -21,19 +21,27 @@
                     session_start();
                     include("header.php");
                     include("helper_funcs.php");
-                    if (!isset($_SESSION["token"])) {
+                    include("token.php");
+
+                    if (isset($_SESSION['token']) && !Validate_Token($_SESSION['token'])) {
+                        Remove_Token($_SESSION['token']);
+                        $_SESSION['token'] = null;
+                        $_SESSION['user_id'] = null;
+                        header("Location: login_form.php?err=4");
+                    }
+
+                    if (!isset($_SESSION['token'])) {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning login-link\" href=\"login_form.php\">Login</a>
                         </li>");
                     }
-                    
                     else {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning\" href=\"submit_form.php\">Submit</a>
                         </li>");
 
                         $stmt = $mysqli->prepare("SELECT mod_status FROM Users WHERE id = ?");
-                        $stmt->bind_param("i", $_SESSION["user_id"]);
+                        $stmt->bind_param("i", $_SESSION['user_id']);
                         $stmt->execute();
                         $res = $stmt->get_result();
                         $row = $res->fetch_row();
@@ -67,12 +75,12 @@
             </div>
                   <?php
                     $runtype = "One Lap";
-                    if (isset($_GET["r"])){
-                        if ($_GET["r"] == 0) {
+                    if (isset($_GET['r'])){
+                        if ($_GET['r'] == 0) {
                             $runtype = "One Lap";
                             echo("<script type=\"text/javascript\">ChangeForm(0)</script>");
                         }
-                        else if ($_GET["r"] == 1) {
+                        else if ($_GET['r'] == 1) {
                             $runtype = "Three Lap";
                             echo("<script type=\"text/javascript\">ChangeForm(1)</script>");
                         }

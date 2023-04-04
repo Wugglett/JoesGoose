@@ -33,5 +33,6 @@ CREATE TABLE Comments (
 
 CREATE TABLE Tokens (
 	token VARCHAR(255) NOT NULL,
-    user_id BIGINT NOT NULL
+    user_id BIGINT NOT NULL,
+    last_used BIGINT DEFAULT UNIX_TIMESTAMP()
 );

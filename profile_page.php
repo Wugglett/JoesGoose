@@ -20,6 +20,14 @@
                 session_start();
                 include("header.php");
                 include("helper_funcs.php");
+                include("token.php");
+
+                if (isset($_SESSION['token']) && !Validate_Token($_SESSION['token'])) {
+                    Remove_Token($_SESSION['token']);
+                    $_SESSION['token'] = null;
+                    $_SESSION['user_id'] = null;
+                    header("Location: login_form.php?err=4");
+                }
 
                 if (!isset($_SESSION["token"])) {
                     echo("                <li class=\"nav-item me-5 ms-5 fs-4\">

@@ -41,6 +41,15 @@
                 echo("<div class=\"col-lg-4\"></div>");
                 echo("</div>");
             }
+            else if ($_GET['err'] == 4) {
+                echo("<div class=\"row\">");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("<div class=\"col-lg-4\">");
+                echo("<h1 class=\"h1 text-danger text-center mt-4\">Login expired</h1>");
+                echo("</div>");
+                echo("<div class=\"col-lg-4\"></div>");
+                echo("</div>");
+            }
         }
     ?>
     <div class="row">
