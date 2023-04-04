@@ -3,6 +3,8 @@
 
 -- Add comments to comments functionality
 
+-- Add time_posted to comments table to display comment recency
+
 -- Create admin page to give users MOD status as well as manage runs and users
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
