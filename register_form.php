@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fw-bold">
         <a class="navbar-brand text-info fs-3 ps-3" href="index.php">Joe's Mongoose Parkour Race</a>
     </nav>
-    <div class="row">
+    <div class="row h-100 mw-100">
         <div hidden id="ErrorOne" class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">

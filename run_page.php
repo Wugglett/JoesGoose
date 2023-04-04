@@ -58,7 +58,7 @@
             ?>
     </nav>
 
-    <div class="row mt-4">
+    <div class="row mt-4 h-100 mw-100">
         <div class="col-lg-2"></div>
         <div class="col-lg-6 text-center">
             <?php

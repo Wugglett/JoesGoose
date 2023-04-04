@@ -52,7 +52,7 @@
             }
         }
     ?>
-    <div class="row">
+    <div class="row h-100 mw-100">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
     <form action="login.php" method="post" class="mt-5 text-center bg-dark p-5">

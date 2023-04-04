@@ -56,7 +56,7 @@
                 }     
             ?>
     </nav>
-    <div class="row">
+    <div class="row h-100 mw-100">
     <div class="col-lg-1"></div>
     <div class="col-lg-3 me-5 text-center">
         <div class="row mt-3 mb-4">

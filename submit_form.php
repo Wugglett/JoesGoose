@@ -39,7 +39,7 @@
                 }     
             ?>
     </nav>
-    <div class="row">
+    <div class="row h-100 mw-100">
         <div hidden id="ErrorOne" class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">

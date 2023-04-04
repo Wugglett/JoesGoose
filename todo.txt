@@ -4,8 +4,6 @@
 -- Add comments to comments functionality
 
 -- Create admin page to give users MOD status as well as manage runs and users
-
--- Add timer to tokens to be deleted after X amount of time
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  |                                                                                                      |
@@ -49,3 +47,7 @@
 -- Display submit and login/logout on all pages depending on login status
 
 -- Do more error checking in register/submit/approve/description/profile_pic/comment to make sure inserts/updates are successful
+
+-- Add timer to tokens to be deleted after 60 mins amount of time
+
+-- Fixed width of pages extending too far

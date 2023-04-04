@@ -59,7 +59,7 @@
             </ul>
         </div>
     </nav>
-    <div class="row">
+    <div class="row h-100 mw-100">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
             <div class="row mb-3 mt-3">
