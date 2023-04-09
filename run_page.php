@@ -101,7 +101,7 @@
                         </div>
                     </form>");
                 
-                $stmt = $mysqli->prepare("SELECT Comments.content, Users.username, Users.id, Comments.id FROM Comments LEFT JOIN Users ON Users.id = Comments.user_id WHERE Comments.run_id = ?");
+                $stmt = $mysqli->prepare("SELECT Comments.content, Users.username, Users.id, Comments.id, Users.profile_pic, Comments.time_posted FROM Comments LEFT JOIN Users ON Users.id = Comments.user_id WHERE Comments.run_id = ?");
                 $stmt->bind_param("i", $_GET["r"]);
                 $stmt->execute();
                 $res = $stmt->get_result();
@@ -110,10 +110,11 @@
                 if ($row) {
                     echo("<h2 class=\"h2 text-warning mb-4\">Comments:</h1>");
                     while($row) {
-                        echo("<div class=\"row mb-3\"><div class=\"col-lg-1 text-secondary\">");
+                        echo("<div class=\"row mb-1\"><div class=\"col-lg-3 text-secondary pe-0\">");
+                        printf("<img alt=\"profile picture\" class=\"me-2\" height=\"25\" width=\"25\" src=\"%s\"/>", $row[4]);
                         echo($row[1]);
                         echo(":</div>");
-                        echo("<div class=\"col-lg-11 text-light\">");
+                        echo("<div class=\"col-lg-9 text-light ps-0\">");
                         echo($row[0]);
                         if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[2]) {
                             echo("<form action=\"delete_comment.php\" method=\"post\">");
@@ -123,6 +124,7 @@
                                 </form>");
                         }
                         echo("</div></div>");
+                        printf("<div class=\"row mb-4 text-secondary\">%s</div>", TimeSince($row[5]));
                         $row = $res->fetch_row();
                     }
                 }

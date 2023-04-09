@@ -2,8 +2,8 @@ CREATE TABLE Users (
     id BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    mod_status ENUM('NON-MOD','MOD') NOT NULL DEFAULT 'NON-MOD',
-    profile_pic LONGBLOB,
+    mod_status ENUM('NON-MOD','MOD', 'ADMIN') DEFAULT 'NON-MOD',
+    profile_pic VARCHAR(255) DEFAULT 'pictures/profile.png',
     PRIMARY KEY(id)
 );
 
@@ -26,6 +26,7 @@ CREATE TABLE Comments (
     run_id BIGINT,
     comment_id BIGINT,
     content VARCHAR(255) NOT NULL,
+    time_posted BIGINT DEFAULT UNIX_TIMESTAMP(),
     FOREIGN KEY(user_id) REFERENCES Users(id),
     FOREIGN KEY(run_id) REFERENCES Runs(id),
     PRIMARY KEY(id),

@@ -161,7 +161,7 @@
                               <th scope=\"col\">Date</th>
                               <th scope=\"col\">Platform</th>
                               <th scope=\"col\">Approved</th>");
-                              if ($row[5] == $_SESSION['user_id']) echo("<th scope=\"col\">Delete Run</th>");
+                              if (isset($_SESSION['user_id']) && $row[5] == $_SESSION['user_id']) echo("<th scope=\"col\">Delete Run</th>");
                           echo("</tr></thead>");
                           $table = true;
                     }
@@ -175,7 +175,7 @@
                         <td>%s</td>
                         <td>%s</td>
                         <td>%s</td>", $row[4], Time_To_String($row[0]), $row[1], $row[2], $row[3]);
-                        if ($row[5] == $_SESSION['user_id']) printf("<td class=\"text-center\"><button class=\"btn btn-muted text-warning\" onclick=\"window.location.href='delete_runs.php?r=%d&&u=%s'\">Delete</button></td>", $row[4], $_GET['u']);
+                        if (isset($_SESSION['user_id']) && $row[5] == $_SESSION['user_id']) printf("<td class=\"text-center\"><button class=\"btn btn-muted text-warning\" onclick=\"window.location.href='delete_runs.php?r=%d&&u=%s'\">Delete</button></td>", $row[4], $_GET['u']);
                         echo("</tr>");
                         $row = $res->fetch_row();
                     }
