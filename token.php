@@ -1,7 +1,7 @@
 <?php
 
 function Create_Token(int $user_id): string {
-    $mysql = new mysqli("67.205.165.66", "zuvhtrcgzw", "6VCWtNBpdQ", "zuvhtrcgzw");
+    $mysql = new mysqli("localhost", "root", "", "joestry");
 
     $token = "";
     $stmt = $mysql->prepare("SELECT * FROM Tokens WHERE token = ?");
@@ -20,7 +20,7 @@ function Create_Token(int $user_id): string {
 }
 
 function Remove_Token(string $token) {
-    $mysql = new mysqli("67.205.165.66", "zuvhtrcgzw", "6VCWtNBpdQ", "zuvhtrcgzw");
+    $mysql = new mysqli("localhost", "root", "", "joestry");
 
     $stmt = $mysql->prepare("DELETE FROM Tokens WHERE token = ?");
     $stmt->bind_param("s", $token);
@@ -28,7 +28,7 @@ function Remove_Token(string $token) {
 }
 
 function Validate_Token(string $token): bool {
-    $mysql = new mysqli("67.205.165.66", "zuvhtrcgzw", "6VCWtNBpdQ", "zuvhtrcgzw");
+    $mysql = new mysqli("localhost", "root", "", "joestry");
 
     $stmt = $mysql->prepare("SELECT last_used FROM Tokens WHERE token = ?");
     $stmt->bind_param("s", $token);

@@ -45,6 +45,13 @@
                         $stmt->execute();
                         $res = $stmt->get_result();
                         $row = $res->fetch_row();
+
+                        if ($row[0] == 'ADMIN') {
+                            echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
+                            <a class=\"nav-link text-warning login-link\" href=\"admin_page.php\">Admin</a>
+                            </li>");
+                        }
+
                         if ($row[0] == 'MOD' || $row[0] == 'ADMIN') {
                             echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                             <a class=\"nav-link text-warning login-link\" href=\"approve.php\">Approve Runs</a>
