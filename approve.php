@@ -51,13 +51,14 @@
                 echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to update run</h1>");
             }
 
-            $stmt = $mysqli->prepare("SELECT Users.username, Runs.run_time, Runs.link, Runs.date_completed, Runs.console, Runs.id 
+            $stmt = $mysqli->prepare("SELECT Users.username AS username, Runs.run_time AS run_time, Runs.link AS link, 
+                                            Runs.date_completed AS date_completed, Runs.console AS console, Runs.id AS run_id 
                                     FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id
                                     WHERE Runs.approved = 'Maybe' AND Runs.user_id != ?");
             $stmt->bind_param("i", $_SESSION["user_id"]);
             $stmt->execute();
             $res = $stmt->get_result();
-            $row = $res->fetch_row();
+            $row = $res->fetch_assoc();
 
             $table = false;
             if($row) {
@@ -86,8 +87,9 @@
                 <td>%s</td>
                 <td><button class=\"btn btn-light ms-3 me-3\" onclick=\"window.location.href='approve_run.php?r=%d&&y=0'\">Yes</button>
                     <button class=\"btn btn-light\" onclick=\"window.location.href='approve_run.php?r=%d&&y=1'\">No</button>
-                </td></tr>", $row[0], $row[0], $row[5], Time_To_String($row[1]), $row[2], $row[2], $row[3], $row[4], $row[5], $row[5]);
-                $row = $res->fetch_row();
+                </td></tr>", $row['username'], $row['username'], $row['run_id'], Time_To_String($row['run_time']), $row['link'], 
+                                $row['link'], $row['date_completed'], $row['console'], $row['run_id'], $row['run_id']);
+                $row = $res->fetch_assoc();
             }
 
             if($table) echo("</table>");

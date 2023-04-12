@@ -43,8 +43,8 @@
                     $stmt->bind_param("i", $_SESSION["user_id"]);
                     $stmt->execute();
                     $res = $stmt->get_result();
-                    $row = $res->fetch_row();
-                    if ($row[0] == 'MOD') {
+                    $row = $res->fetch_assoc();
+                    if ($row['mod_status'] == 'MOD') {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning login-link\" href=\"approve.php\">Approve Runs</a>
                         </li>");
@@ -79,18 +79,18 @@
         $stmt->bind_param("s", $_GET["u"]);
         $stmt->execute();
         $res = $stmt->get_result();
-        $row = $res->fetch_row();
+        $row = $res->fetch_assoc();
 
         $picture_set = "Upload";
-        if ($row[0] != NULL) {
-            printf("<img height=\"150\" width=\"150\" src=\"%s\"/>", $row[0]);
+        if ($row['profile_pic'] != NULL) {
+            printf("<img height=\"150\" width=\"150\" src=\"%s\"/>", $row['profile_pic']);
             $picture_set = "Change";
         }
         else {
             echo("<h3 class\"h3 text-warning\">User has no profile picture</h3>");
         }
 
-        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[1]) {
+        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row['id']) {
             printf("<div class=\"text-light\"><form action=\"profile_picture.php\" method=\"post\" enctype=\"multipart/form-data\">
             <label>%s Profile Picture:</label>
             <input type=\"file\" name=\"image\" id=\"image\">
@@ -109,22 +109,22 @@
         $stmt->bind_param("s", $_GET["u"]);
         $stmt->execute();
         $res = $stmt->get_result();
-        $row = $res->fetch_row();
+        $row = $res->fetch_assoc();
 
         echo("<h3 class=\"h3 text-secondary ms-5\">User Description:</h3>");
 
-        if ($row[0]) {
-            if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[1]) {
+        if ($row['description']) {
+            if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row['id']) {
                 echo("<form action=\"description.php\" method=\"post\"><div class=\"form-group ms-3\">");
-                printf("<textarea class=\"form-control\" id=\"content\" name=\"content\" rows=\"4\" placeholder=\"Write your description here\">%s</textarea>", $row[0]);
+                printf("<textarea class=\"form-control\" id=\"content\" name=\"content\" rows=\"4\" placeholder=\"Write your description here\">%s</textarea>", $row['description']);
                 printf("<input type=\"hidden\" id=\"user\" name=\"user\" value=\"%s\">", $_GET["u"]);
                 echo("<button type=\"submit\" class=\"btn btn-dark mt-2\">Post</button>");
                 echo("</div></form>");
             }
-            else printf("<h4 class=\"h4 text-secondary ms-5\">%s</h4>", $row[0]);
+            else printf("<h4 class=\"h4 text-secondary ms-5\">%s</h4>", $row['description']);
         }
         else {
-            if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[1]) {
+            if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row['id']) {
                 echo("<form action=\"description.php\" method=\"post\"><div class=\"form-group ms-3\">");
                 echo("<textarea class=\"form-control\" id=\"content\" name=\"content\" rows=\"4\" placeholder=\"Write your description here\"></textarea>");
                 printf("<input type=\"hidden\" id=\"user\" name=\"user\" value=\"%s\">", $_GET["u"]);
@@ -143,14 +143,15 @@
                         echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to delete run</h1>");
                     }
 
-                    $stmt = $mysqli->prepare("SELECT Runs.run_time, Runs.date_completed, Runs.console, Runs.approved, Runs.id, Users.id
+                    $stmt = $mysqli->prepare("SELECT Runs.run_time AS run_time, Runs.date_completed AS date_completed, Runs.console AS console, 
+                                                    Runs.approved AS approved, Runs.id AS run_id, Users.id AS user_id
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
                                             WHERE Users.username = ?
                                             ORDER BY Runs.date_completed ASC");
                     $stmt->bind_param("s", $_GET["u"]);
                     $stmt->execute();
                     $res = $stmt->get_result();
-                    $row = $res->fetch_row();
+                    $row = $res->fetch_assoc();
 
                     $table = false;
                     if($row) {
@@ -161,7 +162,7 @@
                               <th scope=\"col\">Date</th>
                               <th scope=\"col\">Platform</th>
                               <th scope=\"col\">Approved</th>");
-                              if (isset($_SESSION['user_id']) && $row[5] == $_SESSION['user_id']) echo("<th scope=\"col\">Delete Run</th>");
+                              if (isset($_SESSION['user_id']) && $row['user_id'] == $_SESSION['user_id']) echo("<th scope=\"col\">Delete Run</th>");
                           echo("</tr></thead>");
                           $table = true;
                     }
@@ -174,10 +175,10 @@
                         <th scope=\"row\"><a href=\"run_page.php?r=%d\">%s</a></th>
                         <td>%s</td>
                         <td>%s</td>
-                        <td>%s</td>", $row[4], Time_To_String($row[0]), $row[1], $row[2], $row[3]);
-                        if (isset($_SESSION['user_id']) && $row[5] == $_SESSION['user_id']) printf("<td class=\"text-center\"><button class=\"btn btn-muted text-warning\" onclick=\"window.location.href='delete_runs.php?r=%d&&u=%s&&l=p'\">Delete</button></td>", $row[4], $_GET['u']);
+                        <td>%s</td>", $row['run_id'], Time_To_String($row['run_time']), $row['date_completed'], $row['console'], $row['approved']);
+                        if (isset($_SESSION['user_id']) && $row['user_id'] == $_SESSION['user_id']) printf("<td class=\"text-center\"><button class=\"btn btn-muted text-warning\" onclick=\"window.location.href='delete_runs.php?r=%d&&u=%s&&l=p'\">Delete</button></td>", $row['run_id'], $_GET['u']);
                         echo("</tr>");
-                        $row = $res->fetch_row();
+                        $row = $res->fetch_assoc();
                     }
 
                     if($table) echo("</table>");

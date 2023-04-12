@@ -53,7 +53,7 @@
                 $stmt->bind_param("i", $_SESSION['user_id']);
                 $stmt->execute();
                 $res = $stmt->get_result();
-                $row = $res->fetch_row();
+                $row = $res->fetch_assoc();
                 
                 $table = false;
 
@@ -79,7 +79,7 @@
 
                 while($row) {
                     $mod1 = "";
-                    switch($row[1]) {
+                    switch($row['mod_status']) {
                         case 'NON-MOD':
                             $mod1 = 'MOD';
                             break;
@@ -102,8 +102,8 @@
                         </form>
                     </td>
                     <td class=\"text-center\"><button class=\"btn btn-secondary ms-3 me-3\" onclick=\"window.location.href='ban_user.php?u=%s\">Ban</button>
-                    </td></tr>", $row[0], $row[0], $row[1], $mod1, $mod1, $row[0], $row[0]);
-                    $row = $res->fetch_row();
+                    </td></tr>", $row['username'], $row['username'], $row['mod_status'], $mod1, $mod1, $row['username'], $row['username']);
+                    $row = $res->fetch_assoc();
                 }
 
                 if ($table) echo("</table>");
@@ -114,12 +114,13 @@
             <?php
                 if (isset($_GET['err']) && $_GET['err'] == 2) echo("<h1 class=\"h1 text-danger text-center mt-4\">Failed to delete run</h1>");
                 
-                $stmt = $mysqli->prepare("SELECT Users.username, Runs.run_time, Runs.link, Runs.date_completed, Runs.console, Runs.id , Runs.approved
+                $stmt = $mysqli->prepare("SELECT Users.username AS username, Runs.run_time AS runtime, Runs.link AS link, 
+                                                Runs.date_completed AS date_completed, Runs.console AS console, Runs.id AS run_id, Runs.approved AS approved
                                         FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id
                                         ORDER BY Users.username, Runs.date_completed");
                 $stmt->execute();
                 $res = $stmt->get_result();
-                $row = $res->fetch_row();
+                $row = $res->fetch_assoc();
 
                 $table = false;
                 if($row) {
@@ -148,8 +149,9 @@
                         <td>%s</td>
                         <td>%s</td>
                         <td><button class=\"btn btn-secondary ms-3 me-3\" onclick=\"window.location.href='delete_runs.php?r=%d&&u=%s&&l=a'\">Delete</button>
-                        </td></tr>", $row[0], $row[0], $row[5], Time_To_String($row[1]), $row[3], $row[4], $row[6], $row[5], $row[5], $row[0]);
-                   $row = $res->fetch_row();
+                        </td></tr>", $row['username'], $row['username'], $row['run_id'], Time_To_String($row['runtime']), 
+                                    $row['date_completed'], $row['console'], $row['approved'], $row['run_id'], $row['run_id'], $row['username']);
+                   $row = $res->fetch_assoc();
                 }
 
                 if($table) echo("</table>");

@@ -44,15 +44,15 @@
                         $stmt->bind_param("i", $_SESSION['user_id']);
                         $stmt->execute();
                         $res = $stmt->get_result();
-                        $row = $res->fetch_row();
+                        $row = $res->fetch_assoc();
 
-                        if ($row[0] == 'ADMIN') {
+                        if ($row['mod_status'] == 'ADMIN') {
                             echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                             <a class=\"nav-link text-warning login-link\" href=\"admin_page.php\">Admin</a>
                             </li>");
                         }
 
-                        if ($row[0] == 'MOD' || $row[0] == 'ADMIN') {
+                        if ($row['mod_status'] == 'MOD' || $row['mod_status'] == 'ADMIN') {
                             echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                             <a class=\"nav-link text-warning login-link\" href=\"approve.php\">Approve Runs</a>
                             </li>");
@@ -92,14 +92,15 @@
                             echo("<script type=\"text/javascript\">ChangeForm(1)</script>");
                         }
                     }
-                    $stmt = $mysqli->prepare("SELECT Users.username, Runs.id, Runs.run_time, Runs.date_completed, Runs.console 
+                    $stmt = $mysqli->prepare("SELECT Users.username AS username, Runs.id AS run_id, Runs.run_time AS run_time, 
+                                                    Runs.date_completed AS date_completed, Runs.console AS console 
                                             FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
                                             WHERE Runs.approved = 'Yes' && Runs.run_type = ?
                                             ORDER BY Runs.run_time ASC");
                     $stmt->bind_param("s", $runtype);
                     $stmt->execute();
                     $res = $stmt->get_result();
-                    $row = $res->fetch_row();
+                    $row = $res->fetch_assoc();
 
                     if ($row) {
                         echo("<table class=\"table table-dark table-bordered table-striped fs-3\">
@@ -125,9 +126,10 @@
                             <td><a href=\"profile_page.php?u=%s\">%s</a></td>
                             <td><a href=\"run_page.php?r=%d\">%s</a></td>
                             <td>%s</td>
-                            <td>%s</td></tr>", $color, $count, $row[0], $row[0], $row[1], Time_To_String($row[2]), $row[3], $row[4]);
+                            <td>%s</td></tr>", $color, $count, $row['username'], $row['username'], $row['run_id'], Time_To_String($row['run_time']), 
+                                                $row['date_completed'], $row['console']);
                             $count++;
-                            $row = $res->fetch_row();
+                            $row = $res->fetch_assoc();
                         }
 
                         echo("</table>");

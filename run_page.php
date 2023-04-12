@@ -44,8 +44,8 @@
                     $stmt->bind_param("i", $_SESSION["user_id"]);
                     $stmt->execute();
                     $res = $stmt->get_result();
-                    $row = $res->fetch_row();
-                    if ($row[0] == 'MOD') {
+                    $row = $res->fetch_assoc();
+                    if ($row['mod_status'] == 'MOD') {
                         echo("                <li class=\"nav-item me-5 ms-5 fs-4\">
                         <a class=\"nav-link text-warning login-link\" href=\"approve.php\">Approve Runs</a>
                         </li>");
@@ -62,16 +62,18 @@
         <div class="col-lg-2"></div>
         <div class="col-lg-6 text-center">
             <?php
-                $stmt = $mysqli->prepare("SELECT Runs.link, Users.username, Runs.run_time FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id WHERE Runs.id = ?");
+                $stmt = $mysqli->prepare("SELECT Runs.link AS link, Users.username AS username, Runs.run_time AS run_time, Runs.approved AS approved
+                                        FROM Runs LEFT JOIN Users ON Users.id = Runs.user_id 
+                                        WHERE Runs.id = ?");
                 $stmt->bind_param("i", $_GET["r"]);
                 $stmt->execute();
                 $res = $stmt->get_result();
-                $row = $res->fetch_row();
+                $row = $res->fetch_assoc();
 
                 if ($row) {
-                    $youtube_link = substr(strchr($row[0], "="), 1);
+                    $youtube_link = substr(strchr($row['link'], "="), 1);
                     printf("<iframe width=\"600\" height=\"400\" src=\"https://www.youtube.com/embed/%s\"></iframe>", $youtube_link);
-                    printf("<h1 class=\"h1 text-warning mt-2\">%s:     %s</h1>", $row[1], Time_To_String($row[2]));
+                    printf("<h1 class=\"h1 text-warning mt-2\">%s:     %s</h1>", $row['username'], Time_To_String($row['run_time']));
                 }
                 else {
                     echo("<h1 class=\"h1 bg-secondary text-warning mt-2\">Something went wrong</h1>");
@@ -101,31 +103,34 @@
                         </div>
                     </form>");
                 
-                $stmt = $mysqli->prepare("SELECT Comments.content, Users.username, Users.id, Comments.id, Users.profile_pic, Comments.time_posted FROM Comments LEFT JOIN Users ON Users.id = Comments.user_id WHERE Comments.run_id = ?");
+                $stmt = $mysqli->prepare("SELECT Comments.content AS content, Users.username AS username, Users.id AS user_id, 
+                                        Comments.id AS comment_id, Users.profile_pic AS profile_pic, Comments.time_posted AS time_posted 
+                                        FROM Comments LEFT JOIN Users ON Users.id = Comments.user_id 
+                                        WHERE Comments.run_id = ?");
                 $stmt->bind_param("i", $_GET["r"]);
                 $stmt->execute();
                 $res = $stmt->get_result();
-                $row = $res->fetch_row();
+                $row = $res->fetch_assoc();
 
                 if ($row) {
                     echo("<h2 class=\"h2 text-warning mb-4\">Comments:</h1>");
                     while($row) {
                         echo("<div class=\"row mb-1\"><div class=\"col-lg-3 text-secondary pe-0\">");
-                        printf("<img alt=\"profile picture\" class=\"me-2\" height=\"25\" width=\"25\" src=\"%s\"/>", $row[4]);
-                        echo($row[1]);
+                        printf("<img alt=\"profile picture\" class=\"me-2\" height=\"25\" width=\"25\" src=\"%s\"/>", $row['profile_pic']);
+                        echo($row['username']);
                         echo(":</div>");
                         echo("<div class=\"col-lg-9 text-light ps-0\">");
-                        echo($row[0]);
-                        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row[2]) {
+                        echo($row['content']);
+                        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $row['user_id']) {
                             echo("<form action=\"delete_comment.php\" method=\"post\">");
-                            printf("<input type=\"hidden\" id=\"comment_id\" name=\"comment_id\" value=\"%d\">", $row[3]);
+                            printf("<input type=\"hidden\" id=\"comment_id\" name=\"comment_id\" value=\"%d\">", $row['comment_id']);
                             printf("<input type=\"hidden\" id=\"run_id\" name=\"run_id\" value=\"%d\">", $_GET["r"]);
                             echo("<button type=\"submit\" class=\"btn btn-dark btn-sm text-warning\">Delete</button>
                                 </form>");
                         }
                         echo("</div></div>");
-                        printf("<div class=\"row mb-4 text-secondary\">%s</div>", TimeSince($row[5]));
-                        $row = $res->fetch_row();
+                        printf("<div class=\"row mb-4 text-secondary\">%s</div>", TimeSince($row['time_posted']));
+                        $row = $res->fetch_assoc();
                     }
                 }
                 else {
