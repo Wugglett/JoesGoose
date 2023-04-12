@@ -26,16 +26,16 @@
             $seconds_since = time() - $time;
 
             $minutes_since = $seconds_since/60;
-            if ($minutes_since < 1) return floor($seconds_since)." seconds ago";
+            if ($minutes_since < 1) return floor($seconds_since)." seconds";
 
             $hours_since = $minutes_since/60;
-            if ($hours_since < 1) return floor($minutes_since)." minutes ago";
+            if ($hours_since < 1) return floor($minutes_since)." minutes";
 
             $days_since = $hours_since/24;
-            if ($days_since < 1) return floor($hours_since)." hours ago";
+            if ($days_since < 1) return floor($hours_since)." hours";
 
             $years_since = $days_since/365;
-            if ($years_since < 1) return floor($days_since)." days ago";
+            if ($years_since < 1) return floor($days_since)." days";
 
-            return floor($years_since)." years ago";
+            return floor($years_since)." years";
         }

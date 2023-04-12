@@ -129,7 +129,7 @@
                                 </form>");
                         }
                         echo("</div></div>");
-                        printf("<div class=\"row mb-4 text-secondary\">%s</div>", TimeSince($row['time_posted']));
+                        printf("<div class=\"row mb-4 text-secondary\">%s</div>", TimeSince($row['time_posted'])." ago");
                         $row = $res->fetch_assoc();
                     }
                 }

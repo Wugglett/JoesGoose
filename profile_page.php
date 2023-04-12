@@ -105,7 +105,7 @@
             </div>
         </div>
     <?php
-        $stmt = $mysqli->prepare("SELECT description, id FROM Users WHERE username = ?");
+        $stmt = $mysqli->prepare("SELECT description, id, time_joined FROM Users WHERE username = ?");
         $stmt->bind_param("s", $_GET["u"]);
         $stmt->execute();
         $res = $stmt->get_result();
@@ -133,6 +133,7 @@
             }
             else echo("<h4 class=\"h4 text-secondary ms-5\">No user description</h4>");
         }
+        printf("<h5 class=\"h5 text-secondary ms-5 mt-5\">User for %s</h5>", TimeSince($row['time_joined']));
     ?>
     </div>
     <div class="col-lg-7">

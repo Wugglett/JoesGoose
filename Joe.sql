@@ -4,6 +4,8 @@ CREATE TABLE Users (
     password VARCHAR(255) NOT NULL,
     mod_status ENUM('NON-MOD','MOD', 'ADMIN') DEFAULT 'NON-MOD',
     profile_pic VARCHAR(255) DEFAULT 'pictures/profile.png',
+    banned ENUM('NOT-BANNED', 'BANNED') DEFAULT 'NOT-BANNED',
+    time_joined BIGINT DEFAULT UNIX_TIMESTAMP(),
     PRIMARY KEY(id)
 );
 
